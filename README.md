@@ -1,4 +1,3 @@
-@@ -0,0 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,6 +60,18 @@
             text-decoration: none;
             cursor: pointer;
         }
+        #login-url {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        #login-url:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
@@ -69,12 +80,12 @@
     <h1>🎈🌼 ¡Bienvenidos a Tiktok Shop! 🌼🎈</h1>
     <h2>🛍️✨ ¿Estás listo para trabajar? ✨🛍️</h2>
     <h3>🌈✨ ¡Elige la ayuda que necesitas! ✨🌈</h3>
-    <h4 id="login-link">1 Para volver a acceder a su cuenta</h4>
+    <h4 id="login-link" style="cursor: pointer;">1 Para volver a acceder a su cuenta</h4>
 </header>
 
-<div class="grid-container">
+<main class="grid-container">
     <!-- Project items are hidden -->
-</div>
+</main>
 
 <div id="myModal" class="modal">
     <div class="modal-content">
@@ -83,9 +94,11 @@
         <p></p>
         <a id="login-url" href="#" target="_blank"></a>
         <br>
-        <img src="https://i.postimg.cc/XJZZD9Hs/photo-2024-09-28-04-17-48.jpg" alt="Descriptive Image" style="max-width: 100%; height: auto;">
+        <img src="https://i.postimg.cc/XJZZD9Hs/photo-2024-09-28-04-17-48.jpg" alt="Descriptive Image of Tiktok Shop" style="max-width: 100%; height: auto;">
     </div>
 </div>
+
+<h5 style="cursor: pointer;">2 Cambiar al idioma de Myanmar</h5>
 
 <script>
     var modal = document.getElementById("myModal");
@@ -107,6 +120,18 @@
             modal.style.display = "none";
         }
     }
+
+    function changeLanguageToMyanmar() {
+        document.querySelector("header h1").textContent = "🎈🌼 Tiktok Shop မှ ကြိုဆိုပါတယ်! 🌼🎈";
+        document.querySelector("header h2").textContent = "🛍️✨ သင်အလုပ်လုပ်ရန် အသင့်ဖြစ်ပါသလား? ✨🛍️";
+        document.querySelector("header h3").textContent = "🌈✨ သင်လိုအပ်သောအကူအညီကို ရွေးချယ်ပါ! ✨🌈";
+        document.getElementById("login-link").textContent = "1 သင်၏အကောင့်သို့ ပြန်ဝင်ရန်";
+        document.getElementById("login-url").textContent = "ဒီမှာ ဝင်ပါ";
+        document.querySelector(".modal-content p").textContent = "သင်သည် ပထမဆုံးမှတ်ပုံတင်မှုကို အပြီးသတ်ပြီးပါက သင့်အကောင့်သို့ အလွယ်တကူ ဝင်ရောက်နိုင်ပါသည်။";
+        document.querySelector("h5").textContent = "2 မြန်မာဘာသာစကားသို့ပြောင်းပါ";
+    }
+
+    document.querySelector("h5").addEventListener('click', changeLanguageToMyanmar);
 </script>
 
 </body>
