@@ -1,3 +1,4 @@
+@@ -0,0 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,14 +29,6 @@
             gap: 15px;
             padding: 20px;
         }
-        .grid-item {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            cursor: pointer;
-        }
         .modal {
             display: none;
             position: fixed;
@@ -54,6 +47,7 @@
             border: 1px solid #888;
             width: 80%;
             max-width: 500px;
+            text-align: center;
         }
         .close {
             color: #aaa;
@@ -72,68 +66,36 @@
 <body>
 
 <header>
-    <h1>My Portfolio</h1>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-    </nav>
+    <h1>🎈🌼 ¡Bienvenidos a Tiktok Shop! 🌼🎈</h1>
+    <h2>🛍️✨ ¿Estás listo para trabajar? ✨🛍️</h2>
+    <h3>🌈✨ ¡Elige la ayuda que necesitas! ✨🌈</h3>
+    <h4 id="login-link">1 Para volver a acceder a su cuenta</h4>
 </header>
 
-<section id="about">
-    <h2>About Me</h2>
-    <p>Welcome to my portfolio. Here are some of my projects.</p>
-</section>
-
-<section id="projects">
-    <h2>Projects</h2>
-    <div class="grid-container">
-        <div class="grid-item" data-title="Project 1" data-description="Description of Project 1.">
-            <a href="https://drain1103.github.io/Htet/" target="_blank">
-                <h3>Project 1</h3>
-            </a>
-        </div>
-        <div class="grid-item" data-title="Project 2" data-description="Description of Project 2.">
-            <h3>Project 2</h3>
-        </div>
-        <div class="grid-item" data-title="Project 3" data-description="Description of Project 3.">
-            <h3>Project 3</h3>
-        </div>
-        <div class="grid-item" data-title="Project 4" data-description="Description of Project 4.">
-            <h3>Project 4</h3>
-        </div>
-    </div>
-</section>
-
-<section id="contact">
-    <h2>Contact Me</h2>
-    <p>Email: example@example.com</p>
-</section>
+<div class="grid-container">
+    <!-- Project items are hidden -->
+</div>
 
 <div id="myModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <h3 id="modalTitle"></h3>
-        <p id="modalDescription"></p>
+        <h2>Detalles</h2>
+        <p></p>
+        <a id="login-url" href="#" target="_blank"></a>
+        <br>
+        <img src="https://i.postimg.cc/XJZZD9Hs/photo-2024-09-28-04-17-48.jpg" alt="Descriptive Image" style="max-width: 100%; height: auto;">
     </div>
 </div>
 
-<footer>
-    <p>&copy; 2024 My Portfolio</p>
-</footer>
-
 <script>
-    const modal = document.getElementById("myModal");
-    const span = document.getElementsByClassName("close")[0];
+    var modal = document.getElementById("myModal");
+    var span = document.getElementsByClassName("close")[0];
 
-    document.querySelectorAll('.grid-item').forEach(item => {
-        item.addEventListener('click', function() {
-            const title = this.getAttribute('data-title');
-            const description = this.getAttribute('data-description');
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalDescription').innerText = description;
-            modal.style.display = "block";
-        });
+    document.getElementById("login-link").addEventListener('click', function() {
+        document.querySelector(".modal-content p").textContent = "Una vez que haya completado su registro por primera vez, podrá iniciar sesión fácilmente en su cuenta utilizando este enlace.";
+        document.getElementById("login-url").textContent = "Iniciar sesión aquí";
+        document.getElementById("login-url").href = "https://pedfgs.com/m/login";
+        modal.style.display = "block";
     });
 
     span.onclick = function() {
@@ -141,7 +103,7 @@
     }
 
     window.onclick = function(event) {
-        if (event.target === modal) {
+        if (event.target == modal) {
             modal.style.display = "none";
         }
     }
