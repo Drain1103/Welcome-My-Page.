@@ -9,14 +9,14 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://i.postimg.cc/SR4GFyX2/photo-2024-09-28-06-42-05.jpg'); /* Replace with your image URL */
+            background-image: url('https://i.postimg.cc/SR4GFyX2/photo-2024-09-28-06-42-05.jpg');
             background-size: cover;
             background-position: center;
-            height: 100vh; /* Cover full height */
-            color: white; /* Change text color for better visibility */
+            height: 100vh;
+            color: white;
         }
         header {
-            background: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+            background: rgba(0, 0, 0, 0.7);
             padding: 20px;
             text-align: center;
         }
@@ -63,6 +63,10 @@
             text-decoration: none;
             cursor: pointer;
         }
+        .original-text {
+            display: none; /* Initially hide the original text */
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -72,12 +76,16 @@
     <h2 id="ready-text">🛍️✨ ¿Estás listo para trabajar? ✨🛍️</h2>
     <h3 id="choose-help">🌈✨ ¡Elige la ayuda que necesitas! ✨🌈</h3>
     <h4 id="login-link" style="cursor: pointer;">1 Para volver a acceder a su cuenta</h4>
+    <h4 id="register-link" style="cursor: pointer;">2 Fácilmente para registrarse</h4>
+    <div id="original-login-text" class="original-text">Detalles de acceso.</div>
+    <div id="original-register-text" class="original-text">Proceso de registro.</div>
 </header>
 
 <div class="grid-container">
     <!-- Project items are hidden -->
 </div>
 
+<!-- Modal for Login -->
 <div id="myModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -89,21 +97,49 @@
     </div>
 </div>
 
+<!-- Modal for Registration -->
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Registro</h2>
+        <p>✨ ¡Haga clic en este enlace para registrarse directamente y crear su cuenta inmediatamente!</p>
+        <a href="https://pedfgs.com/m/register" target="_blank">Registrarse aquí</a>
+    </div>
+</div>
+
 <script>
-    var modal = document.getElementById("myModal");
-    var span = document.getElementsByClassName("close")[0];
+    var loginModal = document.getElementById("myModal");
+    var registerModal = document.getElementById("registerModal");
+    var span = document.getElementsByClassName("close");
 
     document.getElementById("login-link").addEventListener('click', function() {
-        modal.style.display = "block";
+        loginModal.style.display = "block";
+        document.getElementById("original-login-text").style.display = "block"; // Show original login text
+        document.getElementById("original-register-text").style.display = "none"; // Hide register text
     });
 
-    span.onclick = function() {
-        modal.style.display = "none";
+    document.getElementById("register-link").addEventListener('click', function() {
+        registerModal.style.display = "block"; // Show registration modal
+        document.getElementById("original-register-text").style.display = "block"; // Show original register text
+        document.getElementById("original-login-text").style.display = "none"; // Hide login text
+    });
+
+    for (var i = 0; i < span.length; i++) {
+        span[i].onclick = function() {
+            loginModal.style.display = "none";
+            registerModal.style.display = "none"; // Close both modals
+            document.getElementById("original-login-text").style.display = "none"; // Hide login text
+            document.getElementById("original-register-text").style.display = "none"; // Hide register text
+        }
     }
 
     window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target == loginModal) {
+            loginModal.style.display = "none";
+            document.getElementById("original-login-text").style.display = "none"; // Hide login text
+        } else if (event.target == registerModal) {
+            registerModal.style.display = "none";
+            document.getElementById("original-register-text").style.display = "none"; // Hide register text
         }
     }
 </script>
