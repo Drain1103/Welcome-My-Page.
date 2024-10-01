@@ -35,13 +35,54 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+        .message {
+            margin-top: 20px;
+            color: green;
+            font-weight: bold;
+        }
+        #spinResult {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #spinWheel {
+            width: 100px;
+            height: 100px;
+            border: 10px solid #4CAF50;
+            border-radius: 50%;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        #pointer {
+            width: 10px;
+            height: 50px;
+            background: red;
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        .spin {
+            animation: spin 3s ease-out forwards;
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
     <h1>🌸✨ မြန်မာ့ရိုးရာသီတင်းကျွတ်ပွဲတော် မှကြိုဆိုပါတယ်! 🎉🌙</h1>
     <p>ကျန်းမာချမ်းသာမှုအပြည့်နှင့်အေးချမ်းပျော်ရွှင်စရာအချိန်တစ်ခုဖြစ်ပါစေ။</p>
     
-    <form action="/submit-prayer" method="post">
+    <form id="prayerForm">
         <label for="name">နာမည် :</label><br>
         <input type="text" id="name" name="name" required><br><br>
         
@@ -50,5 +91,37 @@
         
         <input type="submit" value="ပေးပို့ရန်">
     </form>
+
+    <div class="message" id="successMessage" style="display: none;"></div>
+    <div id="spinWheel">
+        <div id="pointer"></div>
+    </div>
+    <div id="spinResult"></div>
+
+    <script>
+        document.getElementById('prayerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting in the traditional way
+
+            // Display the success message
+            var successMessage = document.getElementById('successMessage');
+            successMessage.innerHTML = "✨ ကျေးဇူးတင်ပါသည်! 💌 မင်းရဲ့ ဆုတောင်းစာ ပို့ပြီးပြီ။ 💌✨";
+            successMessage.style.display = "block";
+
+            // Start the spin effect
+            var spinWheel = document.getElementById('spinWheel');
+            spinWheel.classList.add('spin');
+
+            // Rewards array
+            var rewards = [5000, 6000, 7000, 8000, 9000, 10000];
+            // Generate a random result
+            var randomIndex = Math.floor(Math.random() * rewards.length);
+            var spinResult = document.getElementById('spinResult');
+            spinResult.innerHTML = "🎉 You won: " + rewards[randomIndex] + " MMK";
+            spinResult.style.display = "block";
+
+            // Optionally, clear the form fields
+            this.reset();
+        });
+    </script>
 </body>
 </html>
