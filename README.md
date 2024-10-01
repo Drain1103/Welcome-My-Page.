@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prayer Form</title>
+    <title>Prayer Form with Lucky Spin</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-image: url('https://i.postimg.cc/XvSffVf1/photo-2024-10-02-04-06-14.jpg'); /* Updated background image */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the image */
             text-align: center;
             padding: 50px;
         }
         form {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
             border-radius: 10px;
             padding: 20px;
             max-width: 500px;
@@ -40,41 +42,37 @@
             color: green;
             font-weight: bold;
         }
-        #spinResult {
-            display: none;
-            margin-top: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        #spinWheel {
-            width: 100px;
-            height: 100px;
-            border: 10px solid #4CAF50;
+        #spinCircle {
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            margin: 20px auto;
             position: relative;
+            margin: 20px auto;
             overflow: hidden;
         }
-        #pointer {
-            width: 10px;
-            height: 50px;
-            background: red;
+        .segment {
             position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
+            width: 50%;
+            height: 50%;
+            border-radius: 0 100% 0 0; /* Only top right rounded */
+            transform-origin: 100% 100%;
+            color: white; /* Text color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
         }
-        .spin {
-            animation: spin 3s ease-out forwards;
-        }
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+        .segment:nth-child(1) { background: linear-gradient(135deg, #ff7e5f, #feb47b); } /* 5000 MMK */
+        .segment:nth-child(2) { background: linear-gradient(135deg, #6a11cb, #2575fc); } /* 6000 MMK */
+        .segment:nth-child(3) { background: linear-gradient(135deg, #00c6ff, #0072ff); } /* 7000 MMK */
+        .segment:nth-child(4) { background: linear-gradient(135deg, #ff6a00, #ee0979); } /* 8000 MMK */
+        .segment:nth-child(5) { background: linear-gradient(135deg, #ff3f20, #ff8c00); } /* 9000 MMK */
+        .segment:nth-child(6) { background: linear-gradient(135deg, #43e97b, #38f9d7); } /* 10000 MMK */
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -93,10 +91,16 @@
     </form>
 
     <div class="message" id="successMessage" style="display: none;"></div>
-    <div id="spinWheel">
-        <div id="pointer"></div>
+    <div id="spinCircle">
+        <div class="segment" style="transform: rotate(0deg);">5000 MMK</div>
+        <div class="segment" style="transform: rotate(60deg);">6000 MMK</div>
+        <div class="segment" style="transform: rotate(120deg);">7000 MMK</div>
+        <div class="segment" style="transform: rotate(180deg);">8000 MMK</div>
+        <div class="segment" style="transform: rotate(240deg);">9000 MMK</div>
+        <div class="segment" style="transform: rotate(300deg);">10000 MMK</div>
     </div>
-    <div id="spinResult"></div>
+
+    <div class="result" id="result"></div>
 
     <script>
         document.getElementById('prayerForm').addEventListener('submit', function(event) {
@@ -108,19 +112,30 @@
             successMessage.style.display = "block";
 
             // Start the spin effect
-            var spinWheel = document.getElementById('spinWheel');
-            spinWheel.classList.add('spin');
+            const spinCircle = document.getElementById('spinCircle');
+            const randomRotation = Math.floor(Math.random() * 360) + 3600; // Spins multiple full rotations
 
-            // Rewards array
-            var rewards = [5000, 6000, 7000, 8000, 9000, 10000];
-            // Generate a random result
-            var randomIndex = Math.floor(Math.random() * rewards.length);
-            var spinResult = document.getElementById('spinResult');
-            spinResult.innerHTML = "🎉 You won: " + rewards[randomIndex] + " MMK";
-            spinResult.style.display = "block";
+            // Add spinning effect
+            spinCircle.style.transition = "transform 4s ease-out";
+            spinCircle.style.transform = `rotate(${randomRotation}deg)`;
 
-            // Optionally, clear the form fields
-            this.reset();
+            // Calculate reward based on rotation
+            setTimeout(() => {
+                const rewardIndex = Math.floor((randomRotation % 360) / 60); // Get segment based on rotation
+                const rewards = [5000, 6000, 7000, 8000, 9000, 10000];
+                const reward = rewards[rewardIndex];
+
+                // Display the reward
+                document.getElementById('result').innerText = `🎉 You won: ${reward} MMK!`;
+            }, 4000); // Wait for the animation to finish
+
+            // Optionally, clear the form fields after a short delay
+            setTimeout(() => {
+                this.reset();
+                spinCircle.style.transform = 'rotate(0deg)'; // Reset the spin animation
+                successMessage.style.display = "none"; // Hide the success message
+                document.getElementById('result').innerText = ''; // Clear the result
+            }, 6000); // Adjust time as needed (6 seconds here)
         });
     </script>
 </body>
