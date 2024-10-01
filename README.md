@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prayer Form with Lucky Spin</title>
+    <title>Prayer Form with Lucky Spin and Fireworks</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,6 +12,8 @@
             background-position: center; /* Center the image */
             text-align: center;
             padding: 50px;
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars from appearing */
         }
         form {
             background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
@@ -73,9 +76,18 @@
             font-size: 24px;
             font-weight: bold;
         }
+        /* Fireworks styles */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none; /* Allow clicks to pass through to the form */
+        }
     </style>
 </head>
 <body>
+    <canvas id="fireworksCanvas"></canvas>
+
     <h1>🌸✨ မြန်မာ့ရိုးရာသီတင်းကျွတ်ပွဲတော် မှကြိုဆိုပါတယ်! 🎉🌙</h1>
     <p>ကျန်းမာချမ်းသာမှုအပြည့်နှင့်အေးချမ်းပျော်ရွှင်စရာအချိန်တစ်ခုဖြစ်ပါစေ။</p>
     
@@ -136,6 +148,92 @@
                 document.getElementById('result').innerText = ''; // Clear the result
             }, 6000); // Adjust time as needed (20 seconds here)
         });
+
+        // Fireworks effect
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const fireworks = [];
+
+        function createFirework(x, y) {
+            const firework = {
+                x: x,
+                y: y,
+                particles: [],
+                explode: false,
+            };
+            fireworks.push(firework);
+        }
+
+        function createParticles(x, y) {
+            const colors = ['#FF5733', '#FFBD33', '#DBFF33', '#75FF33', '#33FF57', '#33FFBD', '#33DBFF', '#3375FF', '#3357FF', '#5733FF'];
+
+            for (let i = 0; i < 100; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const particle = {
+                    x: x,
+                    y: y,
+                    radius: Math.random() * 2 + 2,
+                    speedX: Math.cos(angle) * (Math.random() * 6 + 2),
+                    speedY: Math.sin(angle) * (Math.random() * 6 + 2),
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    lifespan: Math.random() * 40 + 30,
+                };
+                fireworks[fireworks.length - 1].particles.push(particle);
+            }
+        }
+
+        function updateParticles() {
+            fireworks.forEach((firework, index) => {
+                if (!firework.explode) {
+                    createParticles(firework.x, firework.y);
+                    firework.explode = true;
+                }
+                firework.particles.forEach((particle, particleIndex) => {
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+                    particle.speedY += 0.05; // Gravity effect
+                    particle.lifespan -= 1;
+
+                    if (particle.lifespan <= 0) {
+                        firework.particles.splice(particleIndex, 1);
+                    }
+                });
+                if (firework.particles.length === 0) {
+                    fireworks.splice(index, 1);
+                }
+            });
+        }
+
+        function drawParticles() {
+            fireworks.forEach((firework) => {
+                firework.particles.forEach((particle) => {
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = particle.color;
+                    ctx.fill();
+                    ctx.closePath();
+                });
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawParticles();
+            updateParticles();
+            requestAnimationFrame(animate);
+        }
+
+        // Set off fireworks at random intervals
+        setInterval(() => {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * (canvas.height / 2) + 100; // Limit to upper part of the screen
+            createFirework(x, y);
+        }, 800); // Interval for a graceful display
+
+        animate();
     </script>
 </body>
 </html>
