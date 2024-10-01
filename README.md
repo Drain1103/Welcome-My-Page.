@@ -92,12 +92,12 @@
 
     <div class="message" id="successMessage" style="display: none;"></div>
     <div id="spinCircle">
-        <div class="segment" style="transform: rotate(0deg);">5000 MMK</div>
-        <div class="segment" style="transform: rotate(60deg);">6000 MMK</div>
-        <div class="segment" style="transform: rotate(120deg);">7000 MMK</div>
-        <div class="segment" style="transform: rotate(180deg);">8000 MMK</div>
-        <div class="segment" style="transform: rotate(240deg);">9000 MMK</div>
-        <div class="segment" style="transform: rotate(300deg);">10000 MMK</div>
+        <div class="segment" style="transform: rotate(0deg);">5000ရသည်</div>
+        <div class="segment" style="transform: rotate(60deg);">6000 ရသည်</div>
+        <div class="segment" style="transform: rotate(120deg);">7000 ရသည်</div>
+        <div class="segment" style="transform: rotate(180deg);">8000 ရသည်</div>
+        <div class="segment" style="transform: rotate(240deg);">9000ရသည်</div>
+        <div class="segment" style="transform: rotate(300deg);">10000 ရသည်</div>
     </div>
 
     <div class="result" id="result"></div>
@@ -126,7 +126,7 @@
                 const reward = rewards[rewardIndex];
 
                 // Display the reward
-                document.getElementById('result').innerText = `🎉 You won: ${reward} MMK!`;
+                document.getElementById('result').innerText = `🎉 မုန့်ဖိုး: ${reward}ရသည် `;
             }, 4000); // Wait for the animation to finish
 
             // Optionally, clear the form fields after a short delay
@@ -135,7 +135,7 @@
                 spinCircle.style.transform = 'rotate(0deg)'; // Reset the spin animation
                 successMessage.style.display = "none"; // Hide the success message
                 document.getElementById('result').innerText = ''; // Clear the result
-            }, 6000); // Adjust time as needed (6 seconds here)
+            }, 6000); // Adjust time as needed (20 seconds here)
         });
     </script>
 </body>
