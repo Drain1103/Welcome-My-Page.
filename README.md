@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="my">
 <head>
     <meta charset="UTF-8">
@@ -12,10 +13,10 @@
             text-align: center;
             padding: 50px;
             margin: 0;
-            overflow: hidden; /* Prevent scrollbars from appearing */
+            overflow: auto; /* Allow scrolling */
         }
         form {
-            background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             padding: 20px;
             max-width: 500px;
@@ -43,50 +44,79 @@
             color: green;
             font-weight: bold;
         }
-        #spinCircle {
-            width: 200px;
-            height: 200px;
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        /* Lucky Spin Styles */
+        .container {
+            text-align: center;
+        }
+        .wheel {
+            width: 300px;
+            height: 300px;
             border-radius: 50%;
+            border: 10px solid #d4af37;
             position: relative;
-            margin: 20px auto;
             overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            transition: transform 2s ease-out;
         }
         .segment {
             position: absolute;
             width: 50%;
             height: 50%;
-            border-radius: 0 100% 0 0; /* Only top right rounded */
-            transform-origin: 100% 100%;
-            color: white; /* Text color */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-align: center;
+            line-height: 120px;
+            font-size: 24px;
             font-weight: bold;
-            font-size: 16px;
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            transform-origin: 100% 100%;
+            overflow: hidden;
         }
-        .segment:nth-child(1) { background: linear-gradient(135deg, #ff7e5f, #feb47b); } /* 5000 MMK */
-        .segment:nth-child(2) { background: linear-gradient(135deg, #6a11cb, #2575fc); } /* 6000 MMK */
-        .segment:nth-child(3) { background: linear-gradient(135deg, #00c6ff, #0072ff); } /* 7000 MMK */
-        .segment:nth-child(4) { background: linear-gradient(135deg, #ff6a00, #ee0979); } /* 8000 MMK */
-        .segment:nth-child(5) { background: linear-gradient(135deg, #ff3f20, #ff8c00); } /* 9000 MMK */
-        .segment:nth-child(6) { background: linear-gradient(135deg, #43e97b, #38f9d7); } /* 10000 MMK */
+        .segment-1 { background: linear-gradient(45deg, #ff7e5f, #feb47b); transform: rotate(0deg); }
+        .segment-2 { background: linear-gradient(45deg, #86e3ce, #65a8e5); transform: rotate(60deg); }
+        .segment-3 { background: linear-gradient(45deg, #fdc830, #f37335); transform: rotate(120deg); }
+        .segment-4 { background: linear-gradient(45deg, #5f72be, #99b3e0); transform: rotate(180deg); }
+        .segment-5 { background: linear-gradient(45deg, #ff5f6d, #ffc371); transform: rotate(240deg); }
+        .segment-6 { background: linear-gradient(45deg, #6a11cb, #2575fc); transform: rotate(300deg); }
+        .reward {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
         .result {
             margin-top: 20px;
             font-size: 24px;
             font-weight: bold;
-        }
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            pointer-events: none; /* Allow clicks to pass through to the form */
+            color: #333;
         }
     </style>
 </head>
 <body>
     <canvas id="fireworksCanvas"></canvas>
 
-    <h1>🌸✨ မြန်မာ့ရိုးရာသီတင်းကျွတ်ပွဲတော် မှကြိုဆိုပါတယ်! 🎉🌙</h1>
+    <h1 style="margin-bottom: 30px;">🌸✨ မြန်မာ့ရိုးရာသီတင်းကျွတ်ပွဲတော် မှကြိုဆိုပါတယ်! 🎉🌙</h1>
     <p>ကျန်းမာချမ်းသာမှုအပြည့်နှင့်အေးချမ်းပျော်ရွှင်စရာအချိန်တစ်ခုဖြစ်ပါစေ။</p>
     
     <form id="prayerForm">
@@ -100,137 +130,70 @@
     </form>
 
     <div class="message" id="successMessage" style="display: none;"></div>
-    <div id="spinCircle">
-        <div class="segment" style="transform: rotate(0deg);">5000ရသည်</div>
-        <div class="segment" style="transform: rotate(60deg);">6000 ရသည်</div>
-        <div class="segment" style="transform: rotate(120deg);">7000 ရသည်</div>
-        <div class="segment" style="transform: rotate(180deg);">8000 ရသည်</div>
-        <div class="segment" style="transform: rotate(240deg);">9000ရသည်</div>
-        <div class="segment" style="transform: rotate(300deg);">10000 ရသည်</div>
-    </div>
 
-    <div class="result" id="result"></div>
+    <div class="container" style="display: none;" id="spinContainer">
+        <h1>🌺✨ သီတင်းကျွတ်မုန်းဖိုးယူကြမယ် ✨🌺
+</h1>
+        <div class="wheel" id="wheel">
+            <div class="segment segment-1"><div class="reward">🌼 5000 🌼</div></div>
+            <div class="segment segment-2"><div class="reward">🌸 6000 🌸</div></div>
+            <div class="segment segment-3"><div class="reward">🌻 7000 🌻</div></div>
+            <div class="segment segment-4"><div class="reward">🎉 8000 🎉</div></div>
+            <div class="segment segment-5"><div class="reward">🎊 9000 🎊</div></div>
+            <div class="segment segment-6"><div class="reward">🌟 10000 🌟</div></div>
+        </div>
+        <button id="spinButton">🌈✨ ကံစစ်းကြည့်ပါ ✨🌈
+</button>
+        <div class="result" id="result"></div>
+    </div>
 
     <script>
         document.getElementById('prayerForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting in the traditional way
+            event.preventDefault();
+            this.style.display = "none";
 
-            // Display the success message
+            const spinContainer = document.getElementById('spinContainer');
+            spinContainer.style.display = "block"; // Show the lucky spin container
+
             var successMessage = document.getElementById('successMessage');
             successMessage.innerHTML = "✨ ကျေးဇူးတင်ပါသည်! 💌 မင်းရဲ့ ဆုတောင်းစာ ပို့ပြီးပြီ။ 💌✨";
             successMessage.style.display = "block";
+        });
 
-            // Start the spin effect
-            const spinCircle = document.getElementById('spinCircle');
-            const randomRotation = Math.floor(Math.random() * 360) + 3600; // Spins multiple full rotations
+        let spinCount = 0;
+        document.getElementById('spinButton').addEventListener('click', function() {
+            const wheel = document.getElementById('wheel');
+            const resultDisplay = document.getElementById('result');
+            spinCount++;
 
-            // Add spinning effect
-            spinCircle.style.transition = "transform 4s ease-out";
-            spinCircle.style.transform = `rotate(${randomRotation}deg)`;
+            let randomDegree;
+            if (spinCount === 9) {
+                randomDegree = 2880;
+            } else {
+                randomDegree = Math.floor(Math.random() * 360) + 720;
+            }
 
-            // Calculate reward based on rotation
+            wheel.style.transform = `rotate(${randomDegree}deg)`;
+
             setTimeout(() => {
-                const rewardIndex = Math.floor((randomRotation % 360) / 60); // Get segment based on rotation
-                const rewards = [5000, 6000, 7000, 8000, 9000, 10000];
-                const reward = rewards[rewardIndex];
+                const totalSegments = 6;
+                const segmentDegree = 360 / totalSegments;
+                const finalDegree = randomDegree % 360;
 
-                // Display the reward
-                document.getElementById('result').innerText = `🎉 မုန့်ဖိုး: ${reward}ရသည် `;
-            }, 4000); // Wait for the animation to finish
+                let resultIndex = Math.floor((finalDegree + (segmentDegree / 2)) / segmentDegree) % totalSegments;
+                const rewards = ['🌼 5000 🌼', '🌸 6000 🌸', '🌻 7000 🌻', '🎉 8000 🎉', '🎊 9000 🎊', '🌟 10000 🌟'];
 
-            // Optionally, clear the form fields after a short delay
-            setTimeout(() => {
-                this.reset();
-                spinCircle.style.transform = 'rotate(0deg)'; // Reset the spin animation
-                successMessage.style.display = "none"; // Hide the success message
-                document.getElementById('result').innerText = ''; // Clear the result
-            }, 6000); // Adjust time as needed
+                resultDisplay.textContent = `🌟 🎀 မုန့်ဖိုး 🎀 🌟
+: ${spinCount === 9 ? rewards[5] : rewards[resultIndex]}`;
+            }, 2000);
         });
 
         const canvas = document.getElementById('fireworksCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
-        const fireworks = [];
-
-        // Create a firework at the specified position
-        function createFirework(x, y) {
-            const firework = {
-                x: x,
-                y: y,
-                particles: [],
-                explode: false,
-            };
-            fireworks.push(firework);
-        }
-
-        // Create fewer particles (using the star emoji) for the firework explosion
-        function createParticles(x, y) {
-            const colors = ['#FF5733', '#FFBD33', '#DBFF33', '#75FF33', '#33FF57', '#33FFBD', '#33DBFF', '#3375FF', '#3357FF', '#5733FF'];
-
-            for (let i = 0; i < 50; i++) { // Reduced the number of particles
-                const angle = Math.random() * Math.PI * 2;
-                const particle = {
-                    x: x,
-                    y: y,
-                    speedX: Math.cos(angle) * (Math.random() * 6 + 2),
-                    speedY: Math.sin(angle) * (Math.random() * 6 + 2),
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    lifespan: Math.random() * 40 + 30,
-                };
-                fireworks[fireworks.length - 1].particles.push(particle);
-            }
-        }
-
-        function updateParticles() {
-            fireworks.forEach((firework, index) => {
-                if (!firework.explode) {
-                    createParticles(firework.x, firework.y);
-                    firework.explode = true; // Set to true after explosion
-                }
-                firework.particles.forEach((particle, particleIndex) => {
-                    particle.x += particle.speedX; // Update position
-                    particle.y += particle.speedY; // Update position
-                    particle.speedY += 0.05; // Gravity effect
-                    particle.lifespan -= 1; // Decrease lifespan
-
-                    if (particle.lifespan <= 0) {
-                        firework.particles.splice(particleIndex, 1); // Remove particle if lifespan ends
-                    }
-                });
-                if (firework.particles.length === 0) {
-                    fireworks.splice(index, 1); // Remove firework if no particles left
-                }
-            });
-        }
-
-        function drawParticles() {
-            fireworks.forEach(firework => {
-                firework.particles.forEach(particle => {
-                    ctx.fillStyle = particle.color; // Set color
-                    ctx.font = '24px Arial';
-                    ctx.fillText('🌟', particle.x, particle.y); // Draw star
-                });
-            });
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-            drawParticles(); // Draw particles
-            updateParticles(); // Update particles
-            requestAnimationFrame(animate); // Loop the animation
-        }
-
-        // Trigger fireworks at intervals
-        setInterval(() => {
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height;
-            createFirework(x, y);
-        }, 1000); // Adjust interval for firework creation
-
-        // Start the animation loop
-        animate();
+        
+        // Fireworks logic
     </script>
 </body>
 </html>
