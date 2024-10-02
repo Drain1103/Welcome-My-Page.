@@ -6,16 +6,16 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://i.postimg.cc/XvSffVf1/photo-2024-10-02-04-06-14.jpg'); /* Updated background image */
-            background-size: cover; /* Cover the entire background */
-            background-position: center; /* Center the image */
+            background-image: url('https://i.postimg.cc/XvSffVf1/photo-2024-10-02-04-06-14.jpg');
+            background-size: cover;
+            background-position: center;
             text-align: center;
             padding: 50px;
             margin: 0;
-            overflow: hidden; /* Prevent scrollbars from appearing */
+            overflow: hidden;
         }
         form {
-            background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             padding: 20px;
             max-width: 500px;
@@ -55,100 +55,89 @@
             position: absolute;
             width: 50%;
             height: 50%;
-            border-radius: 0 100% 0 0; /* Only top right rounded */
+            border-radius: 0 100% 0 0;
             transform-origin: 100% 100%;
-            color: white; /* Text color */
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             font-size: 16px;
         }
-        .segment:nth-child(1) { background: linear-gradient(135deg, #ff7e5f, #feb47b); } /* 5000 MMK */
-        .segment:nth-child(2) { background: linear-gradient(135deg, #6a11cb, #2575fc); } /* 6000 MMK */
-        .segment:nth-child(3) { background: linear-gradient(135deg, #00c6ff, #0072ff); } /* 7000 MMK */
-        .segment:nth-child(4) { background: linear-gradient(135deg, #ff6a00, #ee0979); } /* 8000 MMK */
-        .segment:nth-child(5) { background: linear-gradient(135deg, #ff3f20, #ff8c00); } /* 9000 MMK */
-        .segment:nth-child(6) { background: linear-gradient(135deg, #43e97b, #38f9d7); } /* 10000 MMK */
+        .segment:nth-child(1) { background: linear-gradient(135deg, #ff7e5f, #feb47b); }
+        .segment:nth-child(2) { background: linear-gradient(135deg, #6a11cb, #2575fc); }
+        .segment:nth-child(3) { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+        .segment:nth-child(4) { background: linear-gradient(135deg, #ff6a00, #ee0979); }
+        .segment:nth-child(5) { background: linear-gradient(135deg, #ff3f20, #ff8c00); }
+        .segment:nth-child(6) { background: linear-gradient(135deg, #43e97b, #38f9d7); }
         .result {
             margin-top: 20px;
             font-size: 24px;
             font-weight: bold;
         }
-        /* Fireworks styles */
         canvas {
             position: absolute;
             top: 0;
             left: 0;
-            pointer-events: none; /* Allow clicks to pass through to the form */
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
     <canvas id="fireworksCanvas"></canvas>
 
-    <h1>🌸✨ မြန်မာ့ရိုးရာသီတင်းကျွတ်ပွဲတော် မှကြိုဆိုပါတယ်! 🎉🌙</h1>
-    <p>ကျန်းမာချမ်းသာမှုအပြည့်နှင့်အေးချမ်းပျော်ရွှင်စရာအချိန်တစ်ခုဖြစ်ပါစေ။</p>
-    
+    <h1>🌸✨ မြန်မာ့ရိုးရာသီတင်းကျွတ်ပွဲတော်မှ ကြိုဆိုပါတယ်! 🎉🌙</h1>
+    <p>ကျန်းမာချမ်းသာမှုအပြည့်နှင့် အေးချမ်းပျော်ရွှင်စရာအချိန်တစ်ခုဖြစ်ပါစေ။</p>
+
     <form id="prayerForm">
         <label for="name">နာမည် :</label><br>
         <input type="text" id="name" name="name" required><br><br>
-        
+
         <label for="prayer">🌸✨ အကိုကြီးအတွက် ဆုတောင်းစကား ✨🌸 :</label><br>
         <textarea id="prayer" name="prayer" rows="4" cols="50" placeholder="🌕✨ သီတင်းကျွတ်အတွက် ဆုတောင်းစကား ✨🌕" required></textarea><br><br>
-        
+
         <input type="submit" value="ပေးပို့ရန်">
     </form>
 
     <div class="message" id="successMessage" style="display: none;"></div>
     <div id="spinCircle">
         <div class="segment" style="transform: rotate(0deg);">5000ရသည်</div>
-        <div class="segment" style="transform: rotate(60deg);">6000 ရသည်</div>
-        <div class="segment" style="transform: rotate(120deg);">7000 ရသည်</div>
-        <div class="segment" style="transform: rotate(180deg);">8000 ရသည်</div>
+        <div class="segment" style="transform: rotate(60deg);">6000ရသည်</div>
+        <div class="segment" style="transform: rotate(120deg);">7000ရသည်</div>
+        <div class="segment" style="transform: rotate(180deg);">8000ရသည်</div>
         <div class="segment" style="transform: rotate(240deg);">9000ရသည်</div>
-        <div class="segment" style="transform: rotate(300deg);">10000 ရသည်</div>
+        <div class="segment" style="transform: rotate(300deg);">10000ရသည်</div>
     </div>
 
     <div class="result" id="result"></div>
 
     <script>
         document.getElementById('prayerForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting in the traditional way
-
-            // Display the success message
+            event.preventDefault();
             var successMessage = document.getElementById('successMessage');
             successMessage.innerHTML = "✨ ကျေးဇူးတင်ပါသည်! 💌 မင်းရဲ့ ဆုတောင်းစာ ပို့ပြီးပြီ။ 💌✨";
             successMessage.style.display = "block";
 
-            // Start the spin effect
             const spinCircle = document.getElementById('spinCircle');
-            const randomRotation = Math.floor(Math.random() * 360) + 3600; // Spins multiple full rotations
-
-            // Add spinning effect
+            const randomRotation = Math.floor(Math.random() * 360) + 3600;
             spinCircle.style.transition = "transform 4s ease-out";
             spinCircle.style.transform = `rotate(${randomRotation}deg)`;
 
-            // Calculate reward based on rotation
             setTimeout(() => {
-                const rewardIndex = Math.floor((randomRotation % 360) / 60); // Get segment based on rotation
+                const rewardIndex = Math.floor((randomRotation % 360) / 60);
                 const rewards = [5000, 6000, 7000, 8000, 9000, 10000];
                 const reward = rewards[rewardIndex];
-
-                // Display the reward
                 document.getElementById('result').innerText = `🎉 မုန့်ဖိုး: ${reward}ရသည် `;
-            }, 4000); // Wait for the animation to finish
+            }, 4000);
 
-            // Optionally, clear the form fields after a short delay
             setTimeout(() => {
                 this.reset();
-                spinCircle.style.transform = 'rotate(0deg)'; // Reset the spin animation
-                successMessage.style.display = "none"; // Hide the success message
-                document.getElementById('result').innerText = ''; // Clear the result
-            }, 6000); // Adjust time as needed (20 seconds here)
+                spinCircle.style.transform = 'rotate(0deg)';
+                successMessage.style.display = "none";
+                document.getElementById('result').innerText = '';
+            }, 6000);
         });
 
-        // Fireworks effect
         const canvas = document.getElementById('fireworksCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -157,24 +146,16 @@
         const fireworks = [];
 
         function createFirework(x, y) {
-            const firework = {
-                x: x,
-                y: y,
-                particles: [],
-                explode: false,
-            };
+            const firework = { x, y, particles: [], explode: false };
             fireworks.push(firework);
         }
 
         function createParticles(x, y) {
             const colors = ['#FF5733', '#FFBD33', '#DBFF33', '#75FF33', '#33FF57', '#33FFBD', '#33DBFF', '#3375FF', '#3357FF', '#5733FF'];
-
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 50; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const particle = {
-                    x: x,
-                    y: y,
-                    radius: Math.random() * 2 + 2,
+                    x, y,
                     speedX: Math.cos(angle) * (Math.random() * 6 + 2),
                     speedY: Math.sin(angle) * (Math.random() * 6 + 2),
                     color: colors[Math.floor(Math.random() * colors.length)],
@@ -193,7 +174,7 @@
                 firework.particles.forEach((particle, particleIndex) => {
                     particle.x += particle.speedX;
                     particle.y += particle.speedY;
-                    particle.speedY += 0.05; // Gravity effect
+                    particle.speedY += 0.05;
                     particle.lifespan -= 1;
 
                     if (particle.lifespan <= 0) {
@@ -207,13 +188,11 @@
         }
 
         function drawParticles() {
-            fireworks.forEach((firework) => {
-                firework.particles.forEach((particle) => {
-                    ctx.beginPath();
-                    ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+            fireworks.forEach(firework => {
+                firework.particles.forEach(particle => {
                     ctx.fillStyle = particle.color;
-                    ctx.fill();
-                    ctx.closePath();
+                    ctx.font = '24px Arial';
+                    ctx.fillText('🌟', particle.x, particle.y);
                 });
             });
         }
@@ -225,14 +204,5 @@
             requestAnimationFrame(animate);
         }
 
-        // Set off fireworks at random intervals
         setInterval(() => {
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * (canvas.height / 2) + 100; // Limit to upper part of the screen
-            createFirework(x, y);
-        }, 800); // Interval for a graceful display
-
-        animate();
-    </script>
-</body>
-</html>
+            const x = Math.random() * canvas
