@@ -108,9 +108,18 @@
         }
         .result {
             margin-top: 20px;
-            font-size: 20px;
+            font-size: 16px; /* Adjusted for mobile */
             font-weight: bold;
             color: #333;
+        }
+        @media (max-width: 600px) {
+            .wheel {
+                width: 250px; /* Adjust wheel size for smaller screens */
+                height: 250px;
+            }
+            .result {
+                font-size: 14px; /* Further adjust result size for smaller screens */
+            }
         }
     </style>
 </head>
@@ -140,7 +149,7 @@
             <div class="segment">🌟 10000 🌟</div>
         </div>
         <div class="arrow"></div>
-        <button id="spin-btn">🌈✨ ကံစစ်းကြည့်ပါ ✨🌈</button> <!-- Updated button text -->
+        <button id="spin-btn">🌈✨ ကံစစ်းကြည့်ပါ ✨🌈</button>
         <div class="result" id="result"></div>
     </div>
 
