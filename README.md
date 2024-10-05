@@ -170,7 +170,7 @@
         const wheel = document.getElementById('wheel');
         const spinBtn = document.getElementById('spin-btn');
         const resultDisplay = document.getElementById('result');
-
+        
         spinBtn.addEventListener('click', () => {
             spinCount++;
             const deg = Math.floor(5000 + Math.random() * 5000); // Randomly generate spin degrees
@@ -182,6 +182,8 @@
                 const segments = ['🌼 5000 🌼', '🌸 6000 🌸', '🌻 7000 🌻', '🎉 8000 🎉', '🎊 9000 🎊', '🌟 10000 🌟'];
                 let index;
 
+                const nameInput = document.getElementById('name').value.toLowerCase(); // Get the name input
+
                 // Check if the user has spun 10 times
                 if (spinCount === 10) {
                     index = 5; // 10000 reward
@@ -189,7 +191,14 @@
                     index = Math.floor((deg % 360) / (360 / (segments.length))); // Determine segment index
                 }
 
-                resultDisplay.innerHTML = `🎉 🌟🌼 ဂုဏ်ယူပါတယ်မုန့်ဖိုး 🌼🌟: ${segments[index]} 🎉`;
+                // Check if the name contains "theint" or "hnin"
+                if (nameInput.includes("theint") || nameInput.includes("hnin")) {
+                    resultDisplay.innerHTML = `🎉 🌟🌼 ဂုဏ်ယူပါတယ်မုန့်ဖိုး 🌼🌟: 💸 50000 💸 🎉`;
+                } else {
+                    resultDisplay.innerHTML = `🎉 🌟🌼 ဂုဏ်ယူပါတယ်မုန့်ဖိုး 🌼🌟: ${segments[index]} 🎉`;
+                }
+
+                // Check if user has spun 10 times
                 if (spinCount === 10) {
                     resultDisplay.innerHTML += "<br>🎊🎉 သင်သည် အထူးဆုကြီး 🎉🎊 ရရှိခဲ့ပါသည်! 🌟 10000 🌟 🎉🎊";
                 }
