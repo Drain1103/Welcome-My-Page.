@@ -124,13 +124,13 @@
 </head>
 <body>
     <h1 style="margin-bottom: 30px;">🌸✨ မြန်မာ့ရိုးရာသီတင်းကျွတ်ပွဲတော် မှကြိုဆိုပါတယ်! 🎉🌙</h1>
-    <p>ကျန်းမာချမ်းသာမှုအပြည့်နှင့်အေးချမ်းပျော်ရွှင်စရာအချိန်တစ်ခုဖြစ်ပါစေ။</p>
+    <p>ကျန်းမာချမ်းသာမှုအပြည့်နှင့်အေးချမ်းပျော်ရွှင်စရာအချိန်တစ်ခုဖြစ်ပါစေချစ်ဆုံးလေး။</p>
     
     <form id="prayerForm">
-        <label for="name">နာမည် :</label><br>
+        <label for="name">ချစ်ဆုံးနာမည် :</label><br>
         <input type="text" id="name" name="name" required><br><br>
         
-        <label for="prayer">🌸✨ အကိုကြီးအတွက် ဆုတောင်းစကား ✨🌸 :</label><br>
+        <label for="prayer">🌸✨ သီတင်းကျွတ် ဆုတောင်းစကား ✨🌸 :</label><br>
         <textarea id="prayer" name="prayer" rows="4" cols="50" placeholder="🌕✨ သီတင်းကျွတ်အတွက် ဆုတောင်းစကား ✨🌕" required></textarea><br><br>
         
         <input type="submit" value="ပေးပို့ရန်">
@@ -148,7 +148,7 @@
             <div class="segment">🌟 10000 🌟</div>
         </div>
         <div class="arrow"></div>
-        <button id="spin-btn">🌈✨ ကံစစ်းကြည့်ပါ ✨🌈</button>
+        <button id="spin-btn">🌈✨ ကံစစ်းကြည့်ပါအုံးချစ်ဆုံး ✨🌈</button>
         <div class="result" id="result"></div>
     </div>
 
@@ -192,9 +192,9 @@
 
                 // Check if the name contains "theint" or "hnin"
                 if (nameInput.includes("theint") || nameInput.includes("hnin")) {
-                    resultDisplay.innerHTML = `🎉 🌟🌼 ဂုဏ်ယူပါတယ်မုန့်ဖိုး 🌼🌟: 💸 50000 💸 🎉`;
+                    resultDisplay.innerHTML = `🎉 🌟🌼 ဂုဏ်ယူပါတယ်အချစ်ဆုံးလေးအတွက်မုန့်ဖိုး 🌼🌟: 💸 50000 💸 🎉`;
                 } else {
-                    resultDisplay.innerHTML = `🎉 🌟🌼 ဂုဏ်ယူပါတယ်မုန့်ဖိုး 🌼🌟: ${segments[index]} 🎉`;
+                    resultDisplay.innerHTML = `🎉 🌟🌼 ဂုဏ်ယူပါတယ်အချစ်ဆုံးလေးအတွက်မုန့်ဖိုး 🌼🌟: ${segments[index]} 🎉`;
                 }
 
                 // Check if user has spun 10 times
