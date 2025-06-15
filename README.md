@@ -1,208 +1,234 @@
-<html lang="my">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prayer Form with Lucky Spin</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('https://i.postimg.cc/XvSffVf1/photo-2024-10-02-04-06-14.jpg');
-            background-size: cover;
-            background-position: center;
-            text-align: center;
-            padding: 50px;
-            margin: 0;
-            overflow: auto; /* Allow scrolling */
-        }
-        form {
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            padding: 20px;
-            max-width: 500px;
-            margin: auto;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        .message {
-            margin-top: 20px;
-            color: green;
-            font-weight: bold;
-        }
-        .wheel-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            display: none; /* Initially hidden */
-        }
-        .wheel {
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            border: 10px solid #fff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform: rotate(0deg);
-            transition: transform 4s ease-out;
-            background: linear-gradient(135deg, #ff99cc, #66ccff);
-        }
-        .segment {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            background-color: #fff;
-            text-align: center;
-            line-height: 150px;
-            font-weight: bold;
-            font-size: 14px;
-            border-right: 2px solid #333;
-            border-bottom: 2px solid #333;
-            clip-path: polygon(100% 0, 100% 100%, 50% 50%);
-        }
-        .segment:nth-child(1) { transform: rotate(0deg); background-color: #4caf50; }
-        .segment:nth-child(2) { transform: rotate(60deg); background-color: #2196f3; }
-        .segment:nth-child(3) { transform: rotate(120deg); background-color: #9c27b0; }
-        .segment:nth-child(4) { transform: rotate(180deg); background-color: #e91e63; }
-        .segment:nth-child(5) { transform: rotate(240deg); background-color: #3f51b5; }
-        .segment:nth-child(6) { transform: rotate(300deg); background-color: #f44336; }
-        .arrow {
-            position: absolute;
-            top: -30px;
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 30px solid #333;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #555;
-        }
-        .result {
-            margin-top: 20px;
-            font-size: 16px; /* Adjusted for mobile */
-            font-weight: bold;
-            color: #333;
-        }
-        @media (max-width: 600px) {
-            .wheel {
-                width: 250px; /* Adjust wheel size for smaller screens */
-                height: 250px;
-            }
-            .result {
-                font-size: 14px; /* Further adjust result size for smaller screens */
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fdfdfd;
+    }
+
+    .header {
+      background-color: #333;
+      color: white;
+      padding: 15px 20px;
+    }
+
+    .header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .product-section {
+      padding: 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      border: 2px solid #e8e8f1;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .product-img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .footer {
+      background: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #eee;
+      padding: 10px 0;
+      border-top: 1px solid #ccc;
+    }
+
+    .bottom-nav ul {
+      display: flex;
+      justify-content: space-around;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .bottom-nav a {
+      font-size: 24px;
+      text-decoration: none;
+      color: #000;
+    }
+
+    /* Pale Background Colors */
+    .pale-1 { background-color: #fef6e4; }
+    .pale-2 { background-color: #e8f9f3; }
+    .pale-3 { background-color: #f0e8ff; }
+    .pale-4 { background-color: #ffe9ec; }
+    .pale-5 { background-color: #eaf4ff; }
+    .pale-6 { background-color: #f5f9e9; }
+    .pale-7 { background-color: #fff3e6; }
+    .pale-8 { background-color: #e4f0ff; }
+    .pale-9 { background-color: #fce8f1; }
+  </style>
 </head>
 <body>
-    <h1 style="margin-bottom: 30px;">🌸✨ မြန်မာ့ရိုးရာသီတင်းကျွတ်ပွဲတော် မှကြိုဆိုပါတယ်! 🎉🌙</h1>
-    <p>ကျန်းမာချမ်းသာမှုအပြည့်နှင့်အေးချမ်းပျော်ရွှင်စရာအချိန်တစ်ခုဖြစ်ပါစေချစ်ဆုံးလေး။</p>
-    
-    <form id="prayerForm">
-        <label for="name">ချစ်ဆုံးနာမည် :</label><br>
-        <input type="text" id="name" name="name" required><br><br>
-        
-        <label for="prayer">🌸✨ သီတင်းကျွတ် ဆုတောင်းစကား ✨🌸 :</label><br>
-        <textarea id="prayer" name="prayer" rows="4" cols="50" placeholder="🌕✨ သီတင်းကျွတ်အတွက် ဆုတောင်းစကား ✨🌕" required></textarea><br><br>
-        
-        <input type="submit" value="ပေးပို့ရန်">
-    </form>
 
-    <div class="message" id="successMessage" style="display: none;"></div>
-
-    <div class="wheel-container" id="wheelContainer">
-        <div class="wheel" id="wheel">
-            <div class="segment">🌼 5000 🌼</div>
-            <div class="segment">🌸 6000 🌸</div>
-            <div class="segment">🌻 7000 🌻</div>
-            <div class="segment">🎉 8000 🎉</div>
-            <div class="segment">🎊 9000 🎊</div>
-            <div class="segment">🌟 10000 🌟</div>
-        </div>
-        <div class="arrow"></div>
-        <button id="spin-btn">🌈✨ ကံစစ်းကြည့်ပါအုံးချစ်ဆုံး ✨🌈</button>
-        <div class="result" id="result"></div>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">Product Overview</h1>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Orders</a></li>
+          <li><a href="#">Settings</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <script>
-        document.getElementById('prayerForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            this.style.display = "none";
+  <!-- Product Section -->
+  <section class="product-section">
+    <div class="container">
+      <h2 class="section-title">Products Overview</h2>
+      <div class="product-grid">
 
-            var successMessage = document.getElementById('successMessage');
-            successMessage.innerHTML = "✨ ကျေးဇူးတင်ပါသည်! 💌 မင်းရဲ့ ဆုတောင်းစာ ပို့ပြီးပြီ။ 💌✨";
-            successMessage.style.display = "block";
+        <!-- Product 1 -->
+        <div class="product-card pale-1">
+          <img src="https://i.postimg.cc/FK1Z5ZRT/htet.jpg" alt="Product 1" class="product-img">
+          <h3 class="product-name">Product 1</h3>
+          <p class="price">Price: $25.00</p>
+          <p class="commission">Commission: $5.00</p>
+        </div>
 
-            const wheelContainer = document.getElementById('wheelContainer');
-            wheelContainer.style.display = "flex"; // Show the lucky spin container
-        });
+        <!-- Product 2 -->
+        <div class="product-card pale-2">
+          <img src="https://i.postimg.cc/6ppVn0dB/bag.jpg" alt="Product 2" class="product-img">
+          <h3 class="product-name">Product 2</h3>
+          <p class="price">Price: MMK 50000</p>
+          <p class="commission">Commission: MMK 10000</p>
+        </div>
 
-        let spinCount = 0;
-        const wheel = document.getElementById('wheel');
-        const spinBtn = document.getElementById('spin-btn');
-        const resultDisplay = document.getElementById('result');
-        
-        spinBtn.addEventListener('click', () => {
-            spinCount++;
-            const deg = Math.floor(5000 + Math.random() * 5000); // Randomly generate spin degrees
-            wheel.style.transform = `rotate(${deg}deg)`;
+        <!-- Product 3 -->
+        <div class="product-card pale-3">
+          <img src="https://i.postimg.cc/43rzCRj3/baggy.jpg" alt="Product 3" class="product-img">
+          <h3 class="product-name">Product 3</h3>
+          <p class="price">Price: $30.00</p>
+          <p class="commission">Commission: $6.00</p>
+        </div>
 
-            spinBtn.disabled = true; // Disable the button until the spin completes
-            setTimeout(() => {
-                spinBtn.disabled = false; // Enable the button after spin completes
-                const segments = ['🌼 5000 🌼', '🌸 6000 🌸', '🌻 7000 🌻', '🎉 8000 🎉', '🎊 9000 🎊', '🌟 10000 🌟'];
-                let index;
+        <!-- Product 4 -->
+        <div class="product-card pale-4">
+          <img src="https://i.postimg.cc/44vp0MPJ/jaket.jpg" alt="Product 4" class="product-img">
+          <h3 class="product-name">Product 4</h3>
+          <p class="price">Price: $35.00</p>
+          <p class="commission">Commission: $7.00</p>
+        </div>
 
-                const nameInput = document.getElementById('name').value.toLowerCase(); // Get the name input
+        <!-- Product 5 -->
+        <div class="product-card pale-5">
+          <img src="https://i.postimg.cc/KYgMDs4h/chain.jpg" alt="Product 5" class="product-img">
+          <h3 class="product-name">Product 5</h3>
+          <p class="price">Price: $40.00</p>
+          <p class="commission">Commission: $8.00</p>
+        </div>
 
-                // Check if the user has spun 10 times
-                if (spinCount === 10) {
-                    index = 5; // 10000 reward
-                } else {
-                    index = Math.floor((deg % 360) / (360 / (segments.length))); // Determine segment index
-                }
+        <!-- Product 6 -->
+        <div class="product-card pale-6">
+          <img src="https://i.postimg.cc/gJHrM9WQ/photo-2025-05-02-07-30-04.jpg" alt="Product 6" class="product-img">
+          <h3 class="product-name">Product 6</h3>
+          <p class="price">Price: MMK 60000</p>
+          <p class="commission">Commission: MMK 12000</p>
+        </div>
 
-                // Check if the name contains "theint" or "hnin"
-                if (nameInput.includes("theint") || nameInput.includes("hnin")) {
-                    resultDisplay.innerHTML = `🎉 🌟🌼 ဂုဏ်ယူပါတယ်အချစ်ဆုံးလေးအတွက်မုန့်ဖိုး 🌼🌟: 💸 50000 💸 🎉`;
-                } else {
-                    resultDisplay.innerHTML = `🎉 🌟🌼 ဂုဏ်ယူပါတယ်အချစ်ဆုံးလေးအတွက်မုန့်ဖိုး 🌼🌟: ${segments[index]} 🎉`;
-                }
+        <!-- Product 7 -->
+        <div class="product-card pale-7">
+          <img src="https://i.postimg.cc/zvqH5z7q/chain2.jpg" alt="Product 7" class="product-img">
+          <h3 class="product-name">Product 7</h3>
+          <p class="price">Price: $28.00</p>
+          <p class="commission">Commission: $5.60</p>
+        </div>
 
-                // Check if user has spun 10 times
-                if (spinCount === 10) {
-                    resultDisplay.innerHTML += "<br>🎊🎉 သင်သည် အထူးဆုကြီး 🎉🎊 ရရှိခဲ့ပါသည်! 🌟 10000 🌟 🎉🎊";
-                }
-            }, 4000);
-        });
-    </script>
+        <!-- Product 8 -->
+        <div class="product-card pale-8">
+          <img src="https://i.postimg.cc/1ts3VWqH/glass.jpg" alt="Product 8" class="product-img">
+          <h3 class="product-name">Product 8</h3>
+          <p class="price">Price: MMK 45000</p>
+          <p class="commission">Commission: MMK 9000</p>
+        </div>
+
+        <!-- Product 9 -->
+        <div class="product-card pale-9">
+          <img src="https://i.postimg.cc/6qQ6Yyz4/watch.jpg" alt="Product 9" class="product-img">
+          <h3 class="product-name">Product 9</h3>
+          <p class="price">Price: $50.00</p>
+          <p class="commission">Commission: $10.00</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Our Shop. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <ul>
+      <li><a href="#" id="mainPage">🏠</a></li>
+      <li><a href="staff-commissions.html" id="work">🛠️</a></li>
+      <li><a href="#" id="orders">📦</a></li>
+      <li><a href="profile.html" id="profile">👤</a></li>
+    </ul>
+  </div>
+
 </body>
 </html>
