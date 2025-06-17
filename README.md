@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -226,7 +225,7 @@
       <li><a href="#" id="mainPage">🏠</a></li>
       <li><a href="staff-commissions.html" id="work">🛠️</a></li>
       <li><a href="#" id="orders">📦</a></li>
-      <li><a href="profile.html" id="profile">👤</a></li>
+      <li><a href="https://drain1103.github.io/checker/" id="profile">👤</a></li>
     </ul>
   </div>
 
